@@ -8,36 +8,45 @@ const tipo = document.getElementById("tipo");
 const enfermedad = document.getElementById("enfermedad");
 const boton = document.getElementById("agregar");
 const resultado = document.getElementById("resultado");
+let mensajePropietario = "";
+let mensajeMascota = "";
 
 boton.addEventListener("click", () => {
 
     //Segun el tipo de mascota selecciona se llama el nombre del objeto.
     const tipoMascota = tipo.value.toLowerCase();
 
+    // console.log(propietario.value);
+    // console.log(direccion.value);
+    // console.log(telefono.value);
+    // console.log(tipo.value);
+    // console.log(nombreMascota.value);
+    // console.log(enfermedad.value);
+
     switch (tipoMascota){
         case 'perro':
-            const perro = new Animal('perro');
+            const perro = new Mascota(propietario.value, direccion.value, telefono.value, tipo.value, nombreMascota.value, enfermedad.value);
+            mensajePropietario = perro.getDatosPropietarios();
+            mensajeMascota = `${perro.getAnimal()}, mientras que el nombre de las mascota es : ${perro.getNombre()} y la enfermedad es: ${perro.getEnfermedad()}`;
             break;
         case 'gato':
-            const gato = new Animal('gato');
+            const gato = new Mascota(propietario.value, direccion.value, telefono.value, tipo.value, nombreMascota.value, enfermedad.value);
+            mensajePropietario = gato.getDatosPropietarios();
+            mensajeMascota = `${gato.getAnimal()}, mientras que el nombre de las mascota es : ${gato.getNombre()} y la enfermedad es: ${gato.getEnfermedad()}`;
             break;
         case 'conejo':
-            const conejo = new Animal('conejo');
+            const conejo = new Mascota(propietario.value, direccion.value, telefono.value, tipo.value, nombreMascota.value, enfermedad.value);
+            mensajePropietario = conejo.getDatosPropietarios();
+            mensajeMascota = `${conejo.getAnimal()}, mientras que el nombre de las mascota es : ${conejo.getNombre()} y la enfermedad es: ${conejo.getEnfermedad()}`;
             break;
         default:
-            const animal = new  Animal('gato');
+            const animal = new  Mascota(propietario.value, direccion.value, telefono.value, tipo.value, nombreMascota.value, enfermedad.value);
+            mensajePropietario = animal.getDatosPropietarios();
+            mensajeMascota = `${animal.getAnimal()}, mientras que el nombre de las mascota es : ${animal.getNombre()} y la enfermedad es: ${animal.getEnfermedad()}`;
             break;
     }
 
-
-    const ojbPropietario = new Propietario('rodrigo','tarapaca','12346');    
-    const objAnimal = new Animal('gato');
-    const objMascota = new Mascota('bigotes');
-
-    const mensajeMascota = `El Tipo de animal es un : ${objAnimal.getAnimal()}, mientras que el nombre de las mascota es : ${objMascota.getNombre()} y la enfermedad es: ${objMascota.getEnfermedad()}`;
-
-    resultado.innerHTML = ojbPropietario.getDatosPropietarios();
-
+    resultado.innerHTML = mensajePropietario;
     resultado.innerHTML += '<br>' + mensajeMascota;
 
 });
@@ -56,8 +65,9 @@ class Propietario{
 }
 
 
-class Animal{
-    constructor(tipo){
+class Animal extends Propietario{
+    constructor(nombre, direccion, telefono, tipo){
+        super(nombre, direccion, telefono);
         this._tipo = tipo;
     }
 
@@ -68,17 +78,26 @@ class Animal{
     }
 }
 
-class Mascota{
-    constructor(nombre, enfermedad){
-        this._nombre = nombre;
+class Mascota extends Animal{
+    constructor(nombre, direccion, telefono, tipo, nombreMascota, enfermedad){
+        super(nombre, direccion, telefono, tipo);
+        this._nombreMascota = nombreMascota;
         this._enfermedad = enfermedad;
     }
 
     getNombre(){
-        return this._nombre;
+        return this._nombreMascota;
+    }
+
+    setNombre(valor){
+        this._nombreMascota = valor;
     }
 
     getEnfermedad(){
         return this._enfermedad;
+    }
+
+    setEnfermedad(valor){
+        this._enfermedad = valor;
     }
 }
